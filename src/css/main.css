@@ -1,0 +1,2137 @@
+@import './reset.css';
+@import './lenis.css';
+@import './fonts.css';
+
+/* =========================================================
+   Токены (из Figma «Дизайн V2»)
+   ========================================================= */
+:root {
+  /* цвета */
+  --c-navy: #071b3b;
+  --c-navy-900: #060b23;
+  --c-blue: #04236c;
+  --c-blue-600: #082973;
+  --c-blue-700: #072154;
+  --c-blue-glass: rgba(7, 33, 84, 0.7);
+  --c-cream: #efebe3;
+  --c-ink: #111629;
+  --c-white: #ffffff;
+  --c-gold: #e0b758;
+  --c-gold-dark: #ce9c28;
+  --c-error: #e5484d;
+  --c-muted: #bccdf2;
+  --c-muted-2: #7a95d3;
+  --c-nav: #dadbde;
+  --c-line: rgba(255, 255, 255, 0.2);
+
+  --g-navy-blue: linear-gradient(180deg, #071b3b 39%, #04236c 100%);
+  --g-blue-navy: linear-gradient(180deg, #04236c 0%, #071b3b 100%);
+
+  /* шрифты */
+  --f-display: 'Bounded', 'Arial', sans-serif;
+  --f-text: 'Golos Text Variable', 'Golos Text', 'Arial', sans-serif;
+  --w-display: 466;
+
+  /* сетка */
+  --page: 1440px;
+  --gutter: 24px;
+  --col-gap: 24px;
+  --header-h: 67px;
+
+  /* радиусы */
+  --r-card: 24px;
+  --r-plate: 20px;
+  --r-btn: 30px;
+}
+
+/* =========================================================
+   База
+   ========================================================= */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-width: var(--page);
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.2;
+  color: var(--c-white);
+  background: var(--c-navy);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+  overflow: clip;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Заголовки Bounded */
+.display,
+h1,
+h2,
+h3 {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  line-height: 1.23;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   Кнопки
+   ========================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  padding: 0 44px;
+  border-radius: var(--r-btn);
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.btn--white {
+  background: var(--c-white);
+  color: #000;
+}
+
+.btn--blue {
+  background: var(--c-blue-600);
+  color: var(--c-white);
+}
+
+@media (hover: hover) {
+  .btn--white:hover:not(:disabled),
+  .btn--blue:hover:not(:disabled) {
+    background-color: var(--c-gold);
+  }
+
+  .btn--blue:hover:not(:disabled) {
+    color: var(--c-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn {
+    transition: none;
+  }
+}
+
+.btn--block {
+  width: 100%;
+}
+
+/* =========================================================
+   Шапка
+   ========================================================= */
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: var(--header-h);
+  background: var(--c-navy-900);
+}
+
+.header__inner {
+  display: grid;
+  /* левое меню начинается с x=569, как в Figma (24 + 545) */
+  grid-template-columns: 545px auto 1fr;
+  align-items: center;
+  height: 100%;
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  position: relative;
+  top: 1px; /* в Figma глифы Bounded стоят на 1px ниже */
+  flex: none;
+  width: 170px;
+  font-size: 25.223px;
+  line-height: 30.53px;
+  letter-spacing: -0.0444em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+.logo__white {
+  color: var(--c-white);
+}
+
+.header__rating {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 24px;
+  margin-top: 1px;
+  padding-left: 14px;
+}
+
+.header__rating::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -0.5px; /* линия 1px центрирована на x=206, как stroke в Figma */
+  width: 1px;
+  height: 23px;
+  background: var(--c-white);
+}
+
+.header__rating-value {
+  flex: none;
+  width: 30px;
+  font-size: 22px;
+  line-height: 22px;
+  letter-spacing: -0.09em;
+}
+
+.header__rating-text {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: -0.01em;
+}
+
+.header__rating-count {
+  color: var(--c-muted-2);
+}
+
+.header__nav {
+  position: relative;
+  top: 1px; /* в Figma глифы Bounded стоят на 1px ниже */
+  display: flex;
+}
+
+.header__nav--right {
+  justify-self: end;
+}
+
+/* ширины пунктов и отступы — по текстовым боксам Figma (текст по центру бокса) */
+.header__nav a:nth-child(1) { width: 107px; }
+.header__nav a:nth-child(2) { width: 54px; margin-left: 24px; }
+.header__nav a:nth-child(3) { width: 87px; margin-left: 27px; }
+.header__nav--right a:nth-child(1) { width: 115px; }
+.header__nav--right a:nth-child(2) { width: 210px; margin-left: 27px; }
+
+.header__nav a {
+  font-family: var(--f-display);
+  font-weight: 566;
+  font-size: 12px;
+  line-height: 18.26px;
+  letter-spacing: -0.0629em;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--c-nav);
+  transition: color 0.3s;
+}
+
+.header__nav a:hover {
+  color: var(--c-gold);
+}
+
+/* =========================================================
+   01. Первый экран
+   ========================================================= */
+.hero {
+  position: relative;
+  height: 720px;
+  overflow: hidden;
+  background: #153070;
+}
+
+.hero__bg {
+  position: absolute;
+  top: -45px;
+  left: 0;
+  width: 100%;
+  height: 810px;
+  object-fit: cover;
+}
+
+.hero__shade {
+  position: absolute;
+  top: -173px;
+  left: -36px;
+  width: calc(100% + 72px);
+  height: 533px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(1, 33, 90, 0.6) 59%, rgba(0, 40, 113, 0) 100%);
+  filter: blur(52px);
+}
+
+.hero__screens {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 1;
+  padding-top: 124px;
+  text-align: center;
+}
+
+.hero__eyebrow {
+  font-size: 20.7345px;
+  line-height: 25px;
+  letter-spacing: -0.0543em;
+}
+
+.hero__title {
+  margin-top: 4px;
+  font-size: 45px;
+  line-height: 50.51px;
+  letter-spacing: -0.0444em;
+}
+
+/* в Figma строка «от хобби» — отдельный текст, смещённый от оси на 6px влево */
+.hero__title-line1 {
+  position: relative;
+  left: -6px;
+}
+
+.hero__text {
+  margin-top: 7px;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.0638em;
+  color: var(--c-muted);
+}
+
+/* =========================================================
+   Общие элементы секций
+   ========================================================= */
+
+/* Метка раздела: ——— подросткам ——— */
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  overflow: hidden;
+}
+
+.section-label::before,
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(224, 183, 88, 0) 0%, var(--c-gold) 100%);
+}
+
+.section-label::after {
+  background: linear-gradient(90deg, var(--c-gold) 0%, rgba(224, 183, 88, 0) 100%);
+}
+
+.section-label span {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: -0.0368em;
+  color: var(--c-gold);
+}
+
+.section-label--light::before {
+  background: linear-gradient(90deg, rgba(224, 183, 88, 0) 0%, var(--c-gold-dark) 100%);
+}
+
+.section-label--light::after {
+  background: linear-gradient(90deg, var(--c-gold-dark) 0%, rgba(224, 183, 88, 0) 100%);
+}
+
+.section-label--light span {
+  color: var(--c-gold-dark);
+}
+
+/* Шапка секции: предзаголовок + заголовок + текст */
+.section-head {
+  text-align: center;
+}
+
+.section-head__pre {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 30px;
+  line-height: 37px;
+  letter-spacing: -0.0667em;
+  text-transform: uppercase;
+}
+
+.section-head__title {
+  font-size: 52px;
+  line-height: 64px;
+  letter-spacing: -0.0665em;
+}
+
+.section-head__sub {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 30px;
+  line-height: 37px;
+  letter-spacing: -0.0667em;
+  text-transform: uppercase;
+}
+
+.section-head__text {
+  margin-top: 12px;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.0222em;
+  color: var(--c-muted);
+}
+
+.section-head--dark {
+  color: var(--c-ink);
+}
+
+.section-head--dark .section-head__text {
+  color: var(--c-ink);
+  opacity: 0.9;
+}
+
+/* Цена */
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.price__label {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  letter-spacing: -0.0308em;
+  color: var(--c-muted);
+}
+
+.price__value {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+/* Карточки направлений с ценой и кнопкой */
+.offers {
+  display: grid;
+  gap: var(--col-gap);
+}
+
+.offers--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.offers--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.offer {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 147px;
+  padding: 22px;
+  border: 2px solid var(--c-line);
+  border-radius: var(--r-card);
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.offer__info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: stretch;
+  gap: 12px;
+}
+
+.offer__title {
+  font-size: 22px;
+  line-height: 27px;
+  white-space: nowrap;
+}
+
+.offer__text {
+  margin-top: 2px;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.025em;
+  color: var(--c-muted);
+}
+
+.offer .btn {
+  flex-shrink: 0;
+  width: 226px;
+  padding: 0;
+  letter-spacing: -0.0598em; /* в Figma у «Записаться на пробное» в карточках 03–08 */
+}
+
+.offer--compact {
+  min-height: 168px;
+  padding-top: 25px;
+}
+
+.offer--compact .btn {
+  width: 222px;
+}
+
+/* Светлая карточка (взрослым / детям) */
+.offer--light {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 239px;
+  padding: 23px 20px 20px;
+  background: var(--c-white);
+  color: var(--c-ink);
+}
+
+.offer--light .offer__info {
+  flex: 1;
+  align-self: auto;
+}
+
+.offer--light .offer__text {
+  position: relative;
+  top: 1px; /* в Figma глифы 16px (auto line-height) стоят на 1px ниже */
+  max-width: 404px;
+  margin-top: 6px;
+  color: var(--c-ink);
+  opacity: 0.7;
+}
+
+.offer--light .price__label {
+  color: var(--c-ink);
+  opacity: 0.7;
+}
+
+.offer__prices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.offer--light .btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 222px;
+}
+
+/* Соцсети */
+.social {
+  display: block;
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  transition: opacity 0.3s;
+}
+
+.social:hover {
+  opacity: 0.8;
+}
+
+/* Поля формы */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.field__label {
+  font-size: 13px;
+  line-height: 18px;
+  letter-spacing: -0.002em;
+}
+
+.field__control {
+  width: 100%;
+  height: 52px;
+  padding: 0 16px;
+  border: 1px solid var(--c-white);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  font-family: var(--f-text);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.004em;
+  color: #161616;
+  outline: none;
+  appearance: none;
+}
+
+.field__control::placeholder {
+  color: #000;
+}
+
+select.field__control {
+  cursor: pointer;
+}
+
+.field__control:focus {
+  border-color: var(--c-gold);
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  line-height: 17.5px;
+  letter-spacing: -0.002em;
+  cursor: pointer;
+}
+
+.checkbox input {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  border: 1px solid var(--c-white);
+  border-radius: 2.5px;
+  background: var(--c-white);
+  appearance: none;
+  cursor: pointer;
+}
+
+.checkbox input:checked {
+  background: var(--c-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 8.5l3 3 6-7' fill='none' stroke='%23071B3B' stroke-width='2'/%3E%3C/svg%3E") center/12px no-repeat;
+}
+
+.was-validated :is(.field__control, .checkbox input):invalid {
+  border-color: var(--c-error);
+  box-shadow: inset 0 0 0 1px var(--c-error);
+}
+
+.was-validated :is(.field__control, .checkbox input):invalid:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   02. Подросткам
+   ========================================================= */
+.teens {
+  padding: 64px 0 66px;
+  background: var(--c-navy);
+}
+
+.teens .section-head {
+  margin-top: 40px;
+}
+
+/* линии метки по 688px от x=-79, как в Figma (центр градиента не сдвигается) */
+.teens .section-label {
+  justify-content: center;
+}
+
+.teens .section-label::before,
+.teens .section-label::after {
+  flex: 0 0 688px;
+  margin-top: -1px;
+}
+
+.teens__title {
+  margin-top: 1px;
+  font-size: 50px;
+  line-height: 62px;
+  letter-spacing: -0.0692em;
+}
+
+.teens .section-head__text {
+  margin-top: 12px;
+}
+
+.teens__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--col-gap);
+  margin-top: 51px;
+}
+
+.dir-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 199px;
+  padding: 20px;
+  border: 2px solid var(--c-line);
+  border-radius: var(--r-card);
+  background: var(--c-blue-700);
+  transition: background-color 0.3s;
+}
+
+.dir-card.is-active {
+  background: var(--c-blue-600);
+}
+
+.dir-card:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 3px;
+}
+
+.dir-card__num {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 17px;
+  line-height: 21px;
+  letter-spacing: -0.0588em;
+  color: var(--c-gold);
+}
+
+.dir-card__title {
+  position: relative;
+  z-index: 1;
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 26px;
+  line-height: 32px;
+  letter-spacing: -0.0385em;
+  text-transform: uppercase;
+}
+
+.has-photo-motion .dir-card:hover .dir-card__title {
+  text-shadow: 0 1px 4px var(--c-navy);
+}
+
+.dir-card__photo-window {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: calc(var(--r-card) - 2px);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.dir-card--default .dir-card__photo-window,
+.teens__cards.has-photo-motion .dir-card__photo-window {
+  visibility: visible;
+}
+
+.dir-card__photo {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  width: 194px;
+  height: 138px;
+  padding: 4px 4px 18px;
+  border-radius: 14px;
+  background: var(--c-muted);
+}
+
+.teens__cards.has-photo-motion .dir-card__photo {
+  top: 0;
+  right: auto;
+  left: 0;
+}
+
+.dir-card__photo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dir-card {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   03–05. Программы для подростков (карусель + карточки)
+   ========================================================= */
+.program {
+  position: relative;
+  padding: 46px 0 74px;
+  background: var(--c-navy);
+  overflow: hidden;
+}
+
+.program--3 {
+  padding-bottom: 116px;
+}
+
+.program__glow {
+  position: absolute;
+  top: 84px;
+  left: -26px;
+  width: calc(100% + 52px);
+  height: 400px;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(9, 45, 130, 1) 31%, rgba(9, 45, 130, 0) 100%);
+  pointer-events: none;
+}
+
+.program__inner {
+  position: relative;
+}
+
+.program__tag {
+  position: absolute;
+  top: 5px;
+  left: var(--gutter);
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 17px;
+  line-height: 21px;
+  letter-spacing: -0.0588em;
+  text-transform: uppercase;
+  color: var(--c-gold);
+}
+
+/* top: 1px — в Chrome глифы Bounded 52 стоят на ~0.9px выше, чем в Figma */
+.program__title {
+  position: relative;
+  top: 1px;
+  font-size: 52px;
+  line-height: 64px;
+  letter-spacing: -0.0665em;
+  text-align: center;
+}
+
+/* Геометрия из Figma (фрейм «перелистывание» 1167×229 в x=137, y=180):
+   слайды 394.85×227.39 стоят в 3D — общая перспектива с центром в середине
+   сцены, каждый слайд повёрнут rotateY вокруг своего центра и сдвинут по Z.
+   Боковые ближние (±2) смотрят на зрителя, задние (±1) повёрнуты больше 90°
+   и видны с обратной стороны (зеркально), как в макете. */
+.carousel {
+  margin-top: 70px;
+}
+
+.carousel__stage {
+  position: relative;
+  width: 1167px;
+  height: 229px;
+  margin-left: 113px;
+  perspective: 2134px;
+  perspective-origin: 50% 50%;
+}
+
+.carousel__slide {
+  --slide-y: 0px;
+  --slide-angle: 0deg;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 394.85px;
+  height: 227.39px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+  background: var(--c-blue-700);
+  transform-origin: 50% 50%;
+  transform: translate3d(var(--slide-x), var(--slide-y), var(--slide-z)) rotateY(var(--slide-angle));
+}
+
+/* Обводка в Figma — внутренняя, поверх фото */
+.carousel__slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px solid var(--c-line);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.carousel__slide img,
+.carousel__slide video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.program__defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.carousel__slide--tint img {
+  filter: url(#carousel-tint);
+}
+
+.carousel__slide--warm img {
+  filter: url(#carousel-warm);
+}
+
+.carousel__slide[data-pos='0'] {
+  --slide-x: 386.07px;
+  --slide-y: -1.9px;
+  --slide-z: 336.88px;
+  z-index: 3;
+}
+
+.carousel__slide[data-pos='-1'] {
+  --slide-x: 46px;
+  --slide-z: -1138px;
+  --slide-angle: -130.18deg;
+  z-index: 1;
+}
+
+.carousel__slide[data-pos='1'] {
+  --slide-x: 722.53px;
+  --slide-y: -0.2px;
+  --slide-z: -1135.16px;
+  --slide-angle: 130.11deg;
+  z-index: 1;
+}
+
+.carousel__slide[data-pos='-2'] {
+  --slide-x: -97px;
+  --slide-z: 5.24px;
+  --slide-angle: -63.52deg;
+  z-index: 2;
+}
+
+.carousel__slide[data-pos='2'] {
+  --slide-x: 862px;
+  --slide-z: 36.93px;
+  --slide-angle: 62.87deg;
+  z-index: 2;
+}
+
+/* Стрелки 35.5×20 в x=677 и x=732 (пара смещена от центра на 2.5px, как в макете) */
+.carousel__nav {
+  display: flex;
+  justify-content: center;
+  gap: 19px;
+  margin-top: 45px;
+  padding-left: 5px;
+}
+
+.carousel__btn {
+  display: block;
+  width: 36px;
+  height: 20px;
+}
+
+.carousel__btn img {
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+@media (hover: hover) {
+  .carousel__btn:hover:enabled img {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__btn img {
+    transition: none;
+  }
+}
+
+.carousel__btn:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 4px;
+}
+
+.carousel__btn:focus-visible img {
+  opacity: 1;
+}
+
+.carousel__caption {
+  min-height: 44px;
+  margin-top: 21px;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.0532em;
+  text-align: center;
+  white-space: pre-line;
+  color: var(--c-muted);
+}
+
+.carousel__caption--narrow {
+  max-width: 330px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.program .offers {
+  margin-top: 46px;
+}
+
+/* Карточки 684×147 (03–04) и 448×168 (05): обводка внутренняя, блок подписей —
+   фиксированной высоты (space-between), кнопка прижата справа-снизу */
+.program .offer {
+  display: block;
+  height: 147px;
+  min-height: 0;
+  padding: 20px;
+  transition: background-color 0.2s;
+}
+
+.program .offer:focus-within {
+  background-color: var(--c-blue-700);
+}
+
+.program .offer:focus-within .btn {
+  background-color: var(--c-gold);
+}
+
+@media (hover: hover) {
+  .program .offer:hover {
+    background-color: var(--c-blue-700);
+  }
+
+  .program .offer:hover .btn {
+    background-color: var(--c-gold);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .program .offer {
+    transition: none;
+  }
+}
+
+.program .offer__info {
+  height: 103px;
+  gap: 0;
+}
+
+/* В макете у подписи line-height auto (= 20px у Golos 16) и она не переносится */
+.program .offer__text {
+  line-height: 20px;
+  white-space: nowrap;
+}
+
+.program .offer .btn {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  height: 43px;
+}
+
+#teens-dance .offer .btn {
+  bottom: 23px;
+}
+
+.program--3 .offer {
+  height: 168px;
+  padding-top: 23px;
+}
+
+.program--3 .offer__info {
+  height: 117.71px;
+}
+
+.program--3 .offer .btn {
+  bottom: 22.86px;
+  height: 49.14px;
+}
+
+/* =========================================================
+   06 / 08. Взрослым и детям (светлые блоки)
+   ========================================================= */
+.audience {
+  padding: 64px 0 30px;
+  background: var(--c-cream);
+  color: var(--c-ink);
+}
+
+.audience--adults {
+  padding-top: 0;
+}
+
+.audience__intro {
+  padding-top: 64px;
+  background: var(--c-cream);
+}
+
+.audience__intro-track.has-adults-motion .audience__intro {
+  position: sticky;
+  top: var(--header-h);
+}
+
+.audience__intro-track.has-adults-motion::after {
+  content: '';
+  display: block;
+  height: clamp(760px, 100vh, 1080px);
+}
+
+.audience--kids {
+  padding: 50px 0 150px;
+}
+
+.audience--kids:has(+ .service.has-service-motion) {
+  padding-bottom: 40px;
+}
+
+.audience .section-head {
+  margin-top: 44px;
+}
+
+.audience--kids .section-head {
+  margin-top: 44px;
+}
+
+.audience__title {
+  position: relative;
+  top: 1px; /* в Figma глифы 52px стоят в строке 64px на 1px ниже, чем в Chrome */
+  letter-spacing: -0.02em;
+}
+
+.audience--adults .section-head__pre {
+  margin-bottom: 10px;
+}
+
+.audience--kids .section-head__sub {
+  margin-top: 10px;
+}
+
+.audience--kids .section-head__text {
+  opacity: 0.7;
+}
+
+.audience__body {
+  display: grid;
+  grid-template-columns: 674px 1fr;
+  grid-template-rows: 455px;
+  gap: 44px;
+  margin-top: 80px;
+}
+
+.audience__body--reverse {
+  grid-template-columns: 1fr 674px;
+}
+
+.audience--adults .audience__body {
+  position: relative;
+}
+
+.audience--adults .audience__media {
+  position: absolute;
+  grid-area: 1 / 1 / 2 / 2;
+  inset: 0 auto auto 0;
+  width: 100%;
+}
+
+.audience--adults .points {
+  grid-area: 1 / 2;
+}
+
+.audience__media {
+  height: 455px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.audience__media img,
+.audience__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.points {
+  list-style: none;
+  max-width: 674px;
+}
+
+.points__item {
+  position: relative;
+  min-height: 138px;
+  padding-bottom: 42px;
+}
+
+.points__item + .points__item {
+  padding-top: 42px;
+}
+
+.points__item:last-child {
+  min-height: 0;
+  padding-bottom: 0;
+}
+
+.points--reverse .points__item {
+  min-height: 0;
+  padding-bottom: 58px;
+}
+
+.points--reverse .points__item + .points__item {
+  padding-top: 58px;
+}
+
+.points--reverse .points__item:last-child {
+  padding-bottom: 0;
+}
+
+.points__item + .points__item::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 674px;
+  height: 1px;
+  /* средняя точка имитирует интерполяцию градиента Figma (без premultiplied alpha) */
+  background: linear-gradient(90deg, #ce9c28 0%, rgba(215, 170, 64, 0.5) 50%, rgba(224, 183, 88, 0) 100%);
+}
+
+.points--reverse .points__item + .points__item::before {
+  background: linear-gradient(90deg, rgba(224, 183, 88, 0) 0%, rgba(215, 170, 64, 0.5) 50%, #ce9c28 100%);
+}
+
+.points__title {
+  max-width: 449px;
+  font-size: 30px;
+  line-height: 37px;
+}
+
+.points--reverse .points__title {
+  max-width: none;
+}
+
+.points__text {
+  max-width: 449px;
+  margin-top: 15px;
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: -0.025em;
+  opacity: 0.7;
+}
+
+.audience .offers {
+  margin-top: 70px;
+}
+
+/* В макете у этого текста ширина 411px вместо 404px */
+.audience .offer__text--wide {
+  width: 411px;
+  max-width: none;
+}
+
+/* Линии метки: в макете начинаются за краем экрана (взрослым −64px, детям −12.5px)
+   и лежат на 1px выше центра текста; средняя точка — интерполяция как в Figma */
+.audience .section-label::before,
+.audience .section-label::after {
+  transform: translateY(-1px);
+}
+
+.audience--adults .section-label::before {
+  background: linear-gradient(90deg, rgba(224, 183, 88, 0) -64px, rgba(215, 170, 64, 0.5) calc(50% - 32px), var(--c-gold-dark) 100%);
+}
+
+.audience--adults .section-label::after {
+  background: linear-gradient(90deg, var(--c-gold-dark) 0%, rgba(215, 170, 64, 0.5) calc(50% + 32px), rgba(224, 183, 88, 0) calc(100% + 64px));
+}
+
+.audience--kids .section-label::before {
+  background: linear-gradient(90deg, rgba(224, 183, 88, 0) -12.5px, rgba(215, 170, 64, 0.5) calc(50% - 6.25px), var(--c-gold-dark) 100%);
+}
+
+.audience--kids .section-label::after {
+  background: linear-gradient(90deg, var(--c-gold-dark) 0%, rgba(215, 170, 64, 0.5) calc(50% + 6.25px), rgba(224, 183, 88, 0) calc(100% + 12.5px));
+}
+
+/* =========================================================
+   09. Сервис
+   ========================================================= */
+.service {
+  --service-title-line-height: 64px;
+  position: relative;
+  isolation: isolate;
+  background: var(--g-navy-blue);
+}
+
+.service__scene {
+  position: absolute;
+  inset: 0;
+}
+
+.service__blue {
+  display: none;
+}
+
+.service.has-service-motion {
+  --service-scene-height: calc(100svh - var(--header-h));
+  --service-title-top: clamp(168px, 25svh, 236px);
+  --service-end-overlap: max(0px, calc(var(--service-scene-height) - var(--service-title-top) - 3 * var(--service-title-line-height) - 95px));
+  min-height: calc(var(--service-scene-height) + clamp(670px, 82svh, 880px));
+  /* Блок видео входит поверх нижнего края закреплённого фона. */
+  margin-bottom: calc(-1 * var(--service-end-overlap));
+  background: var(--c-blue);
+}
+
+.has-service-motion .service__scene {
+  position: sticky;
+  inset: var(--header-h) auto auto;
+  height: var(--service-scene-height);
+  background: var(--c-cream);
+  color: var(--c-ink);
+}
+
+.has-service-motion .service__blue {
+  position: absolute;
+  inset: 0;
+  display: block;
+  background: linear-gradient(180deg, var(--c-navy) 39%, var(--c-blue) calc(100% - var(--service-end-overlap)));
+  color: var(--c-white);
+  pointer-events: none;
+}
+
+.service__inner {
+  position: relative;
+  max-width: var(--page);
+  height: 927px;
+  margin: 0 auto;
+}
+
+.has-service-motion .service__inner {
+  position: absolute;
+  inset: 0 0 auto;
+}
+
+.service__title {
+  position: absolute;
+  top: 264px;
+  left: 0;
+  right: 0;
+  font-size: 52px;
+  line-height: var(--service-title-line-height);
+  letter-spacing: -0.0665em;
+  text-align: center;
+}
+
+.has-service-motion .service__title {
+  top: var(--service-title-top);
+}
+
+.service-card {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 22px;
+  border-radius: var(--r-plate);
+  background: var(--c-cream);
+  color: var(--c-ink);
+  text-align: center;
+}
+
+.service-card__photo {
+  width: 404px;
+  height: 207px;
+  margin-bottom: 12px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.service-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service-card__title {
+  font-size: 22px;
+  line-height: 27px;
+}
+
+.service-card__text {
+  width: 404px;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.025em;
+  opacity: 0.7;
+}
+
+/* =========================================================
+   Видео студии
+   ========================================================= */
+.studio-video {
+  padding: 13px 0 12px;
+  background: var(--c-blue);
+}
+
+.service.has-service-motion + .studio-video {
+  position: relative;
+}
+
+.studio-video__frame {
+  position: relative;
+  height: 714px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.studio-video__frame video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================================================
+   13. Отзывы
+   ========================================================= */
+.reviews {
+  padding: 114px 0 57px;
+  background: var(--c-blue);
+}
+
+.reviews__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.reviews__title {
+  font-size: 52px;
+  line-height: 64px;
+  letter-spacing: -0.0192em;
+}
+
+.reviews__sub {
+  margin-top: 13px;
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 30px;
+  line-height: 37px;
+  letter-spacing: -0.0667em;
+  text-transform: uppercase;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 6px;
+}
+
+.rating__logo {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: var(--c-white);
+}
+
+.rating__logo img {
+  width: 38px;
+  height: 38px;
+}
+
+.rating__body {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rating__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.rating__stars img {
+  width: 20px;
+  height: 20px;
+}
+
+.rating__value {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.rating__count {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18.2px;
+}
+
+.reviews__list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  margin-top: 98px;
+}
+
+/* Плашки стоят по координатам из макета (--x от левого края контейнера) */
+.reviews__row {
+  position: relative;
+  height: 88px;
+}
+
+.review {
+  position: absolute;
+  top: 0;
+  left: var(--x);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  border-radius: var(--r-plate);
+  background: var(--c-white);
+  color: #000;
+}
+
+.review img {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review p {
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.0222em;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   14. Форма записи
+   ========================================================= */
+.signup {
+  padding: 50px 0 87px;
+  background: var(--g-blue-navy);
+}
+
+.signup__panel {
+  display: grid;
+  grid-template-columns: 635px 652px;
+  justify-content: space-between;
+  padding: 30px 30px 34px;
+  border: 2px solid var(--c-line);
+  border-radius: var(--r-card);
+  background: var(--c-blue-glass);
+}
+
+.signup__photo {
+  height: 313px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.signup__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.signup__person-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 28px;
+}
+
+.signup__name {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 22px;
+  line-height: 27px;
+  text-transform: uppercase;
+}
+
+.signup__role,
+.signup__reply {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.004em;
+  color: var(--c-muted);
+}
+
+.signup__role {
+  margin-left: 1px;
+}
+
+.signup__contact {
+  display: flex;
+  align-items: center;
+  gap: 9.5px;
+  margin-right: 0.5px;
+}
+
+.signup__reply {
+  margin: 0 5px 0 0;
+  text-align: right;
+}
+
+.form__title {
+  margin-top: 1px;
+  font-size: 33px;
+  line-height: 41px;
+  letter-spacing: -0.02em;
+}
+
+.form__title span {
+  display: block;
+  margin-top: -1px;
+  font-size: 24px;
+  line-height: 28px;
+}
+
+.signup__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup__form .form__row {
+  display: grid;
+  grid-template-columns: 448px 180px;
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.signup__form select.field__control {
+  padding: 0 14px;
+}
+
+.signup__form .field--age select.field__control {
+  padding-left: 21px;
+}
+
+.signup__form > .field {
+  margin-top: 15px;
+  gap: 5.5px;
+}
+
+.signup__form .checkbox {
+  margin-top: 14px;
+}
+
+.form__submit {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-top: 32px;
+}
+
+.btn--wide {
+  width: 266px;
+  height: 41px;
+  padding: 2px 0 0;
+}
+
+.form__note {
+  width: 160px;
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: -0.004em;
+  color: var(--c-muted);
+}
+
+/* =========================================================
+   15. Наставники
+   ========================================================= */
+.mentors {
+  padding: 34px 0 101px;
+  background: var(--c-navy);
+}
+
+.mentors__title {
+  max-width: 960px;
+  margin: 0 auto;
+  font-size: 52px;
+  line-height: 64px;
+  letter-spacing: -0.0665em;
+  text-align: center;
+}
+
+.mentors__cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--col-gap);
+  margin-top: 65px;
+}
+
+.mentor-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 199px;
+  padding: 20px 20px 25px;
+  border: 2px solid var(--c-line);
+  border-radius: var(--r-card);
+  background: var(--c-blue-700);
+  transition: background-color 0.3s;
+}
+
+.mentor-card--default {
+  background: var(--c-blue-600);
+}
+
+.mentor-card__num {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 17px;
+  line-height: 21px;
+  letter-spacing: -0.0588em;
+  color: var(--c-gold);
+}
+
+.mentor-card__icon {
+  position: absolute;
+  top: 25px;
+  right: 21px;
+  width: auto;
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.mentor-card__icon--rest {
+  opacity: 1;
+}
+
+@media (hover: hover) {
+  .mentors__cards:has(.mentor-card:hover) .mentor-card--default:not(:hover) {
+    background: var(--c-blue-700);
+  }
+
+  .mentor-card:hover {
+    background: var(--c-blue-600);
+  }
+
+  .mentors__cards:has(.mentor-card:hover) .mentor-card__icon--rest {
+    opacity: 0;
+  }
+
+  .mentor-card:hover .mentor-card__icon:not(.mentor-card__icon--rest) {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mentor-card,
+  .mentor-card__icon {
+    transition: none;
+  }
+}
+
+.mentor-card__text {
+  position: relative;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.025em;
+}
+
+/* =========================================================
+   16. Аренда залов
+   ========================================================= */
+.rent {
+  background: var(--g-navy-blue);
+}
+
+.rent__inner {
+  position: relative;
+  height: 802px;
+}
+
+.rent__text {
+  position: absolute;
+  top: 217px;
+  left: var(--gutter);
+}
+
+.rent__title {
+  width: 596px;
+  font-size: 52px;
+  line-height: 64px;
+  letter-spacing: -0.0665em;
+}
+
+.rent__note {
+  width: 228px;
+  margin: 45px 0 0 -4px;
+  font-size: 18px;
+  line-height: 22px;
+  letter-spacing: -0.0532em;
+  color: var(--c-muted);
+}
+
+.hall-card {
+  position: absolute;
+  top: var(--y);
+  left: var(--x);
+  display: flex;
+  flex-direction: column;
+  width: 566px;
+  padding: 22px;
+  border: 2px solid var(--c-line);
+  border-radius: var(--r-plate);
+  background: var(--c-blue-glass);
+  -webkit-backdrop-filter: blur(17.3px);
+  backdrop-filter: blur(17.3px);
+}
+
+.hall-card__photo {
+  width: 524px; /* в Figma фото-фрейм 524px — на 2px шире контентной области */
+  height: 401px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.hall-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hall-card__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 22px 0 16px;
+}
+
+.hall-card .btn {
+  width: 522px; /* в Figma кнопка 522px при контенте 518px */
+  padding-top: 3px; /* глиф в Figma на ~1.5px ниже, чем в Chrome при той же строке */
+}
+
+.hall-card__title {
+  font-size: 22px;
+  line-height: 27px;
+}
+
+.hall-card__price {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hall-card__price b {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 20px;
+  line-height: 25px;
+  letter-spacing: -0.05em;
+}
+
+.hall-card__price span {
+  font-weight: 400;
+  font-size: 13px;
+  letter-spacing: -0.0308em;
+  opacity: 0.7;
+}
+
+@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
+  .rent__inner {
+    --rent-stack-start: 57px;
+    --rent-stack-step: 64px;
+    --rent-sticky-top: clamp(var(--header-h), calc(100svh - 704px), calc(var(--header-h) + var(--rent-stack-start)));
+    display: grid;
+    height: auto;
+    padding-bottom: calc(2 * var(--rent-stack-step));
+  }
+
+  .rent__text {
+    position: sticky;
+    grid-area: 1 / 1;
+    align-self: start;
+    justify-self: start;
+    top: calc(var(--rent-sticky-top) + 160px);
+    left: auto;
+    margin-top: 217px;
+  }
+
+  .rent__stack {
+    grid-area: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 26px;
+    padding-top: var(--rent-stack-start);
+    pointer-events: none;
+  }
+
+  .rent__stack::after {
+    content: '';
+    flex: 0 0 28px;
+  }
+
+  .hall-card {
+    position: sticky;
+    flex-shrink: 0;
+    /* Общий порог сохраняет шаг стопки при выходе из секции. */
+    top: var(--rent-sticky-top);
+    left: auto;
+    margin-left: calc(var(--x) - var(--gutter));
+    transform: translateY(calc(var(--y) - var(--rent-stack-start)));
+    pointer-events: auto;
+  }
+
+  .hall-card + .hall-card {
+    margin-top: calc(-1 * var(--rent-stack-step));
+  }
+
+  .hall-card:has(:focus-visible) {
+    z-index: 1;
+  }
+}
+
+/* =========================================================
+   19. Контакты + футер
+   ========================================================= */
+.contacts {
+  position: relative;
+  padding-top: 54px;
+  background: var(--g-blue-navy);
+  overflow: hidden;
+}
+
+.contacts__top {
+  display: grid;
+  grid-template-columns: 674px 1fr;
+  gap: 34px;
+}
+
+.contacts__map {
+  display: block;
+  height: 307px;
+  border-radius: var(--r-plate);
+  overflow: hidden;
+}
+
+.contacts__map img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contacts__metro {
+  margin-top: 25px;
+  font-size: 14px;
+  line-height: 14px;
+  letter-spacing: -0.004em;
+  color: var(--c-muted);
+}
+
+.contacts__title {
+  margin-top: 1px;
+  white-space: nowrap;
+  font-size: 33px;
+  line-height: 41px;
+  letter-spacing: -0.0202em;
+}
+
+.contacts__list {
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+  margin-top: 32px;
+}
+
+.contacts__list dt {
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.004em;
+  color: var(--c-muted);
+}
+
+.contacts__list dd {
+  position: relative;
+  top: 1px; /* Figma: textAlignVertical BOTTOM — глиф на 1px ниже */
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: -0.025em;
+}
+
+.contacts__phone-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 29px;
+  margin-top: -1px;
+}
+
+.contacts__phone-row > div:first-child {
+  flex: 0 0 240px;
+}
+
+.contacts__phone-row dd {
+  top: 0;
+  margin-top: 12px;
+}
+
+.contacts__phone {
+  font-family: var(--f-display);
+  font-weight: var(--w-display);
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.contacts__socials {
+  display: flex;
+  gap: 9.5px;
+}
+
+.cta {
+  display: grid;
+  grid-template-columns: 1fr 662px;
+  align-items: start;
+  height: 152px;
+  margin-top: 56px;
+  padding: 0 20px;
+  border: 2px solid rgba(224, 183, 88, 0.6);
+  border-radius: var(--r-card);
+  background: var(--c-blue-glass);
+}
+
+.cta__head {
+  display: flex;
+  align-items: flex-end;
+  gap: 46px;
+  margin-top: 38px;
+}
+
+.cta__title {
+  width: 286px;
+  font-size: 26px;
+  line-height: 32px;
+}
+
+.cta__aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.cta__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 159px;
+  height: 25px;
+  padding: 1px 0 0;
+  border-radius: var(--r-btn);
+  background: var(--c-gold);
+  font-size: 14px;
+  letter-spacing: -0.0286em;
+  color: #000;
+}
+
+.cta__text {
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: -0.0286em;
+  color: var(--c-muted);
+}
+
+.cta__form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  margin-top: 19px;
+}
+
+.contacts .checkbox input {
+  margin-top: 0;
+}
+
+.cta__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.field--sm {
+  width: 384px;
+}
+
+.field--sm .field__label {
+  margin-bottom: 5px;
+}
+
+.field--sm .field__control {
+  height: 41px;
+}
+
+.btn--cta {
+  width: 266px;
+  height: 41px;
+  padding: 2px 0 0;
+}
+
+.footer {
+  position: relative;
+  height: 151px;
+  margin-top: 0;
+}
+
+.footer__inner {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 96px;
+}
+
+.footer__link {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18.2px;
+  letter-spacing: -0.004em;
+  color: var(--c-muted);
+}
+
+a.footer__link:hover {
+  color: var(--c-white);
+}
+
+.footer__logo {
+  position: absolute;
+  top: 77px;
+  left: 50%;
+  width: 924px;
+  max-width: none;
+  height: auto;
+  transform: translateX(-50%);
+  pointer-events: none;
+}

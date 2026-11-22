@@ -1,0 +1,12 @@
+/* Golos Text — вариативный, латиница + кириллица (npm @fontsource-variable/golos-text) */
+@import '@fontsource-variable/golos-text/index.css';
+
+/* Bounded — вариативный 200–900, OFL. Подмножество: латиница, кириллица, ₽ */
+@font-face {
+  font-family: 'Bounded';
+  src: url('/fonts/Bounded-Variable.woff2') format('woff2-variations'),
+    url('/fonts/Bounded-Variable.woff2') format('woff2');
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}
