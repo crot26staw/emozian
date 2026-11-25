@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { toRem } from './layout-units.js';
 
 // Порядок на орбите идёт по углу поворота, включая две дальние позиции.
 const orbit = [-1, -2, 0, 2, 1];
@@ -17,12 +18,14 @@ function readPose(slide) {
 
 function initCarousel(carousel) {
   const slides = orbit.map((position) => carousel.querySelector(`[data-pos="${position}"]`));
-  const poses = slides.map(readPose);
+  const stage = carousel.querySelector('.carousel__stage');
   const caption = carousel.querySelector('[data-carousel-caption]');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const mobile = window.matchMedia('(width < 900px)');
   let rotation = 0;
   let pending = 0;
   let animation = null;
+  let gesture = null;
 
   function settle(steps) {
     rotation = wrap(rotation - steps);
@@ -50,6 +53,7 @@ function initCarousel(carousel) {
 
     const step = Math.sign(pending);
     pending -= step;
+    const poses = orbit.map((position) => readPose(carousel.querySelector(`[data-pos="${position}"]`)));
     const paths = slides.map((slide, index) => {
       const from = poses[wrap(index + rotation)];
       const to = poses[wrap(index + rotation - step)];
@@ -72,7 +76,7 @@ function initCarousel(carousel) {
           const backDepth = crossesBack ? 220 * Math.sin(progress * Math.PI) : 0;
           const z = interpolate(from.z, to.z, progress) - backDepth;
           const angle = interpolate(from.angle, targetAngle, progress);
-          slide.style.transform = `translate3d(${x}px, ${y}px, ${z}px) rotateY(${angle}deg)`;
+          slide.style.transform = `translate3d(${toRem(x)}, ${toRem(y)}, ${toRem(z)}) rotateY(${angle}deg)`;
           slide.style.zIndex = Math.round(z + 1500);
         }
       },
@@ -97,6 +101,22 @@ function initCarousel(carousel) {
     enqueue(event.key === 'ArrowRight' ? 1 : -1);
   });
 
+  stage.addEventListener('pointerdown', (event) => {
+    if (event.pointerType === 'mouse') return;
+    gesture = event.isPrimary ? { id: event.pointerId, x: event.clientX, y: event.clientY } : null;
+    if (gesture) stage.setPointerCapture(event.pointerId);
+  });
+  stage.addEventListener('pointerup', (event) => {
+    if (gesture?.id !== event.pointerId) return;
+    const dx = event.clientX - gesture.x;
+    const dy = event.clientY - gesture.y;
+    gesture = null;
+    if (Math.abs(dx) >= 32 && Math.abs(dx) > Math.abs(dy) * 1.25) enqueue(dx < 0 ? 1 : -1);
+  });
+  stage.addEventListener('lostpointercapture', () => { gesture = null; });
+  stage.addEventListener('pointercancel', () => { gesture = null; });
+
+  mobile.addEventListener('change', () => animation?.progress(1));
   reducedMotion.addEventListener('change', (event) => {
     if (event.matches) animation?.progress(1);
   });

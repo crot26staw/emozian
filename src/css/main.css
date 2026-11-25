@@ -48,11 +48,14 @@
    База
    ========================================================= */
 html {
+  /* 1440px макета = 90rem. При ширине 900px один rem равен 10px. */
+  font-size: clamp(62.5%, 100vw / 90, 100%);
+  scroll-padding-top: var(--header-h);
+  scrollbar-gutter: stable;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-width: var(--page);
   font-family: var(--f-text);
   font-weight: 500;
   font-size: 16px;
@@ -162,6 +165,16 @@ h3 {
   gap: 12px;
 }
 
+.header__toggle,
+.footer__nav-link {
+  display: none;
+}
+
+.header__menus {
+  display: contents;
+  color: inherit;
+}
+
 .logo {
   font-family: var(--f-display);
   font-weight: var(--w-display);
@@ -258,72 +271,214 @@ h3 {
    01. Первый экран
    ========================================================= */
 .hero {
+  --hero-unit: min(100vw / 1440, 100svh / 720);
+  --hero-step: 65svh;
+  --hero-card-width: calc(500 * var(--hero-unit));
+  --hero-perspective: calc(1000 * var(--hero-unit));
+  width: min(100%, 100vw);
   position: relative;
-  height: 720px;
+}
+
+.hero.has-hero-motion {
+  /* После последней карточки коридор ещё на короткое время остаётся на месте. */
+  height: calc(120svh + var(--hero-steps) * var(--hero-step));
+}
+
+.hero__scene {
+  position: sticky;
+  top: 0;
+  height: 100svh;
   overflow: hidden;
   background: #153070;
 }
 
 .hero__bg {
   position: absolute;
-  top: -45px;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 810px;
+  height: 100%;
   object-fit: cover;
+  object-position: 50% 52%;
+  transform-origin: 50% 54%;
 }
 
 .hero__shade {
   position: absolute;
-  top: -173px;
-  left: -36px;
-  width: calc(100% + 72px);
-  height: 533px;
+  top: -24%;
+  left: -2.5%;
+  width: 105%;
+  height: 74%;
   border-radius: 50%;
   background: linear-gradient(180deg, rgba(1, 33, 90, 0.6) 59%, rgba(0, 40, 113, 0) 100%);
   filter: blur(52px);
 }
 
-.hero__screens {
+.hero__frame {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: calc(1440 * var(--hero-unit));
+  height: calc(720 * var(--hero-unit));
+  transform: translate(-50%, -50%);
+}
+
+.hero__still {
   position: absolute;
   inset: 0;
+}
+
+.hero__still img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .hero__content {
-  position: relative;
-  z-index: 1;
-  padding-top: 124px;
+  position: absolute;
+  inset: calc(124 * var(--hero-unit)) 0 auto;
+  z-index: 2;
   text-align: center;
+  pointer-events: none;
 }
 
 .hero__eyebrow {
-  font-size: 20.7345px;
-  line-height: 25px;
+  font-size: calc(20.7345 * var(--hero-unit));
+  line-height: 1.206;
   letter-spacing: -0.0543em;
 }
 
 .hero__title {
-  margin-top: 4px;
-  font-size: 45px;
-  line-height: 50.51px;
+  margin-top: calc(4 * var(--hero-unit));
+  font-size: calc(45 * var(--hero-unit));
+  line-height: 1.1225;
   letter-spacing: -0.0444em;
 }
 
 /* в Figma строка «от хобби» — отдельный текст, смещённый от оси на 6px влево */
 .hero__title-line1 {
   position: relative;
-  left: -6px;
+  left: calc(-6 * var(--hero-unit));
 }
 
 .hero__text {
-  margin-top: 7px;
-  font-size: 15px;
-  line-height: 18px;
+  margin: calc(7 * var(--hero-unit)) auto 0;
+  font-size: calc(15 * var(--hero-unit));
+  line-height: 1.2;
   letter-spacing: -0.0638em;
   color: var(--c-muted);
+}
+
+.hero__stage,
+.hero__next,
+.has-hero-motion .hero__still {
+  display: none;
+}
+
+.has-hero-motion .hero__stage,
+.has-hero-motion .hero__next {
+  display: block;
+}
+
+.hero__stage {
+  position: absolute;
+  inset: 0;
+  perspective: var(--hero-perspective);
+  touch-action: pan-y pinch-zoom;
+}
+
+.hero__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--hero-card-width);
+  pointer-events: none;
+}
+
+.hero__card img {
+  width: 100%;
+  height: auto;
+  user-select: none;
+  filter: drop-shadow(0 14px 20px rgb(2 8 30 / 40%));
+  transition: transform 0.35s ease-out;
+}
+
+.hero__card.is-next,
+a.hero__card.is-front {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .hero__card.is-front:hover img {
+    transform: translateY(calc(-6 * var(--hero-unit)));
+  }
+}
+
+.hero__card--video {
+  aspect-ratio: 1584 / 923;
+  padding: calc(var(--hero-card-width) * 0.026);
+  border-radius: calc(var(--hero-card-width) * 0.047);
+  background: linear-gradient(160deg, #2b2f44, #1a1d2b 60%, #202434);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 18%), 0 14px 24px rgb(2 8 30 / 40%);
+}
+
+.hero__card video {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--hero-card-width) * 0.03);
+  object-fit: cover;
+}
+
+.hero__next {
+  position: absolute;
+  z-index: 3;
+  bottom: calc(16 * var(--hero-unit));
+  left: 50%;
+  width: max(44Px, 38 * var(--hero-unit)); /* минимальная зона касания в CSS-пикселях */
+  aspect-ratio: 1;
+  padding: 3px;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero__next svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  fill: none;
+  stroke: rgb(255 255 255 / 45%);
+  stroke-width: 1.4;
+}
+
+.hero__progress {
+  stroke: white;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.hero__next::after {
+  content: '';
+  position: absolute;
+  inset: 34%;
+  border-radius: 50%;
+  background: var(--c-muted);
+}
+
+.hero__next:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero__card:focus-visible,
+.hero__next:focus-visible {
+  outline: 2px solid var(--c-gold);
+  outline-offset: 4px;
+}
+
+@keyframes hero-hint {
+  50% { transform: scale(0.78); opacity: 0.8; }
 }
 
 /* =========================================================
@@ -751,12 +906,6 @@ select.field__control {
   background: var(--c-muted);
 }
 
-.teens__cards.has-photo-motion .dir-card__photo {
-  top: 0;
-  right: auto;
-  left: 0;
-}
-
 .dir-card__photo img {
   width: 100%;
   height: 100%;
@@ -839,8 +988,13 @@ select.field__control {
   perspective-origin: 50% 50%;
 }
 
+.carousel__orbit,
+.mentor-card picture {
+  display: contents;
+}
+
 .carousel__slide {
-  --slide-y: 0px;
+  --slide-y: 0;
   --slide-angle: 0deg;
   position: absolute;
   top: 0;
@@ -851,7 +1005,8 @@ select.field__control {
   overflow: hidden;
   background: var(--c-blue-700);
   transform-origin: 50% 50%;
-  transform: translate3d(var(--slide-x), var(--slide-y), var(--slide-z)) rotateY(var(--slide-angle));
+  /* CSS и JS используют одни координаты орбиты в пикселях макета. */
+  transform: translate3d(calc(var(--slide-x) * 1px), calc(var(--slide-y) * 1px), calc(var(--slide-z) * 1px)) rotateY(var(--slide-angle));
 }
 
 /* Обводка в Figma — внутренняя, поверх фото */
@@ -888,37 +1043,37 @@ select.field__control {
 }
 
 .carousel__slide[data-pos='0'] {
-  --slide-x: 386.07px;
-  --slide-y: -1.9px;
-  --slide-z: 336.88px;
+  --slide-x: 386.07;
+  --slide-y: -1.9;
+  --slide-z: 336.88;
   z-index: 3;
 }
 
 .carousel__slide[data-pos='-1'] {
-  --slide-x: 46px;
-  --slide-z: -1138px;
+  --slide-x: 46;
+  --slide-z: -1138;
   --slide-angle: -130.18deg;
   z-index: 1;
 }
 
 .carousel__slide[data-pos='1'] {
-  --slide-x: 722.53px;
-  --slide-y: -0.2px;
-  --slide-z: -1135.16px;
+  --slide-x: 722.53;
+  --slide-y: -0.2;
+  --slide-z: -1135.16;
   --slide-angle: 130.11deg;
   z-index: 1;
 }
 
 .carousel__slide[data-pos='-2'] {
-  --slide-x: -97px;
-  --slide-z: 5.24px;
+  --slide-x: -97;
+  --slide-z: 5.24;
   --slide-angle: -63.52deg;
   z-index: 2;
 }
 
 .carousel__slide[data-pos='2'] {
-  --slide-x: 862px;
-  --slide-z: 36.93px;
+  --slide-x: 862;
+  --slide-z: 36.93;
   --slide-angle: 62.87deg;
   z-index: 2;
 }
@@ -1280,7 +1435,7 @@ select.field__control {
 .service.has-service-motion {
   --service-scene-height: calc(100svh - var(--header-h));
   --service-title-top: clamp(168px, 25svh, 236px);
-  --service-end-overlap: max(0px, calc(var(--service-scene-height) - var(--service-title-top) - 3 * var(--service-title-line-height) - 95px));
+  --service-end-overlap: max(0rem, calc(var(--service-scene-height) - var(--service-title-top) - 3 * var(--service-title-line-height) - 95px));
   min-height: calc(var(--service-scene-height) + clamp(670px, 82svh, 880px));
   /* Блок видео входит поверх нижнего края закреплённого фона. */
   margin-bottom: calc(-1 * var(--service-end-overlap));
@@ -1367,7 +1522,8 @@ select.field__control {
 }
 
 .service-card__text {
-  width: 404px;
+  --text-width: 404px;
+  width: var(--text-width);
   font-size: 16px;
   line-height: 19px;
   letter-spacing: -0.025em;
@@ -1539,12 +1695,16 @@ select.field__control {
 .signup__panel {
   display: grid;
   grid-template-columns: 635px 652px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "person title" "person fields";
   justify-content: space-between;
   padding: 30px 30px 34px;
   border: 2px solid var(--c-line);
   border-radius: var(--r-card);
   background: var(--c-blue-glass);
 }
+
+.signup__person { grid-area: person; }
 
 .signup__photo {
   height: 313px;
@@ -1556,6 +1716,12 @@ select.field__control {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.signup__photo picture,
+.contacts__map picture {
+  display: block;
+  height: 100%;
 }
 
 .signup__person-row {
@@ -1599,6 +1765,7 @@ select.field__control {
 }
 
 .form__title {
+  grid-area: title;
   margin-top: 1px;
   font-size: 33px;
   line-height: 41px;
@@ -1613,6 +1780,7 @@ select.field__control {
 }
 
 .signup__form {
+  grid-area: fields;
   display: flex;
   flex-direction: column;
 }
@@ -1718,11 +1886,14 @@ select.field__control {
   top: 25px;
   right: 21px;
   width: auto;
-  height: auto;
+  height: 108px;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s;
 }
+
+.mentor-card__icon--tall { height: 116px; }
+.mentor-card__icon--square { height: 84px; }
 
 .mentor-card__icon--rest {
   opacity: 1;
@@ -1755,6 +1926,7 @@ select.field__control {
 
 .mentor-card__text {
   position: relative;
+  width: var(--text-width, auto);
   font-size: 16px;
   line-height: 19px;
   letter-spacing: -0.025em;
@@ -1860,7 +2032,7 @@ select.field__control {
   opacity: 0.7;
 }
 
-@media (min-width: 1200px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
   .rent__inner {
     --rent-stack-start: 57px;
     --rent-stack-step: 64px;
@@ -2067,20 +2239,20 @@ select.field__control {
 }
 
 .cta__form {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
+  display: grid;
+  grid-template-columns: 384px 266px;
+  grid-template-areas: "phone submit" "consent consent";
+  align-items: end;
+  gap: 22px 12px;
   margin-top: 19px;
 }
 
+.cta__form .field { grid-area: phone; }
+.cta__form .checkbox { grid-area: consent; }
+.cta__form .btn { grid-area: submit; }
+
 .contacts .checkbox input {
   margin-top: 0;
-}
-
-.cta__row {
-  display: flex;
-  align-items: flex-end;
-  gap: 12px;
 }
 
 .field--sm {

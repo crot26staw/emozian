@@ -1,8 +1,9 @@
 import { gsap } from 'gsap';
+import { toRem } from './layout-units.js';
 
 export function addAudiencePointsReveal(timeline, points, startAt = 0) {
   timeline
-    .set(points, { opacity: 0, y: 48, rotation: 3, transformOrigin: 'left center', immediateRender: true }, 0)
+    .set(points, { opacity: 0, y: toRem(48), rotation: 3, transformOrigin: 'left center', immediateRender: true }, 0)
     .to(points, {
       opacity: 1,
       y: 0,
@@ -23,6 +24,7 @@ export function initKidsPoints() {
       start: 'top 80%',
       end: 'top 43%',
       scrub: 0.3,
+      invalidateOnRefresh: true,
     },
   });
 

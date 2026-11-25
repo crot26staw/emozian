@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { toCssPixels } from './layout-units.js';
 
 export function initServiceAnimation() {
   const section = document.querySelector('.service');
@@ -18,7 +19,7 @@ export function initServiceAnimation() {
   blue.append(blueHeading);
   section.classList.add('has-service-motion');
 
-  gsap.fromTo([heading, blueHeading], { y: () => 110 - heading.offsetTop }, {
+  gsap.fromTo([heading, blueHeading], { y: () => toCssPixels(110) - heading.offsetTop }, {
     y: 0,
     ease: 'sine.inOut',
     scrollTrigger: {
@@ -33,8 +34,8 @@ export function initServiceAnimation() {
   gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: 'top 124px',
-      end: () => `+=${Math.round(gsap.utils.clamp(230, 310, scene.clientHeight * 0.34) * scrollScale)}`,
+      start: () => `top ${toCssPixels(124)}px`,
+      end: () => `+=${Math.round(gsap.utils.clamp(toCssPixels(230), toCssPixels(310), scene.clientHeight * 0.34) * scrollScale)}`,
       scrub: 0.28,
       invalidateOnRefresh: true,
     },

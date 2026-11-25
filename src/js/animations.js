@@ -3,6 +3,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { initAdultsAnimation } from './adults-animation.js';
 import { initKidsPoints } from './audience-points.js';
 import { initCarousels } from './carousels.js';
+import { initHeroAnimation } from './hero-animation.js';
+import { initMobileAnimations } from './mobile-animations.js';
+import { toRem } from './layout-units.js';
 import { initServiceAnimation } from './service-animation.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,15 +15,12 @@ function initTeensPhotos(row) {
   const defaultCard = row.querySelector('.dir-card--default');
   const defaultPhoto = defaultCard.querySelector('.dir-card__photo');
   const defaultWindow = defaultPhoto.parentElement;
-  const photoWidth = defaultPhoto.offsetWidth;
-  const photoHeight = defaultPhoto.offsetHeight;
-  const insetRight = parseFloat(getComputedStyle(defaultPhoto).right);
-  const insetTop = defaultPhoto.offsetTop;
   const controls = new AbortController();
   const options = { signal: controls.signal };
   const flight = { x: 0, y: 0 };
   let activeCard = defaultCard;
   let pointerOverRow = false;
+  let photoWidth, photoHeight, insetRight, insetTop;
 
   const windows = cards.map((card) => {
     const photoWindow = card.querySelector('.dir-card__photo-window');
@@ -37,19 +37,22 @@ function initTeensPhotos(row) {
 
   function measure() {
     const bounds = row.getBoundingClientRect();
+    const photo = defaultPhoto.getBoundingClientRect();
+    const style = getComputedStyle(defaultPhoto);
+    photoWidth = photo.width;
+    photoHeight = photo.height;
+    insetRight = parseFloat(style.right);
+    insetTop = parseFloat(style.top);
     for (const frame of windows) {
       const rect = frame.window.getBoundingClientRect();
-      frame.x = rect.left - bounds.left;
-      frame.y = rect.top - bounds.top;
+      frame.x = rect.right - bounds.left - insetRight - photoWidth;
+      frame.y = rect.top - bounds.top + insetTop;
     }
   }
 
   function restPosition(card) {
-    const frame = windows[cards.indexOf(card)];
-    return {
-      x: frame.x + frame.window.clientWidth - insetRight - photoWidth,
-      y: frame.y + insetTop,
-    };
+    const { x, y } = windows[cards.indexOf(card)];
+    return { x, y };
   }
 
   measure();
@@ -74,6 +77,12 @@ function initTeensPhotos(row) {
   function showFocusedCard() {
     show(row.querySelector('.dir-card:focus-visible') ?? defaultCard);
   }
+
+  const observer = new ResizeObserver(() => {
+    measure();
+    show(activeCard);
+  });
+  observer.observe(row);
 
   row.addEventListener('pointermove', (event) => {
     if (event.pointerType === 'touch') return;
@@ -101,6 +110,7 @@ function initTeensPhotos(row) {
 
   return () => {
     controls.abort();
+    observer.disconnect();
     moveX.tween.kill();
     moveY.tween.kill();
     row.classList.remove('has-photo-motion');
@@ -113,14 +123,14 @@ function initTeensPhotos(row) {
 function initProgramOffers() {
   const cleanup = [...document.querySelectorAll('.program .offers')].map((row) => {
     const reveal = gsap.from(row.querySelectorAll('.offer'), {
-      y: (index) => 64 + index * 30,
+      y: (index) => toRem(64 + index * 30),
       rotation: (index) => 5 + index,
       opacity: 0,
       duration: 0.62,
       stagger: 0.14,
       ease: 'power3.out',
       clearProps: 'transform,opacity',
-      scrollTrigger: { trigger: row, start: 'top 82%', toggleActions: 'play none none reverse' },
+      scrollTrigger: { trigger: row, start: 'top 82%', toggleActions: 'play none none reverse', invalidateOnRefresh: true },
     });
 
     function finish() {
@@ -141,10 +151,10 @@ function initReviews() {
   const [upperRow, lowerRow] = list.querySelectorAll('.reviews__row');
   gsap.timeline({
     defaults: { duration: 0.7, ease: 'power1.out' },
-    scrollTrigger: { trigger: list, start: 'top 84%', end: 'top 50%', scrub: 0.3 },
+    scrollTrigger: { trigger: list, start: 'top 84%', end: 'top 50%', scrub: 0.3, invalidateOnRefresh: true },
   })
-    .from(upperRow, { x: -112, opacity: 0 }, 0)
-    .from(lowerRow, { x: 112, opacity: 0 }, 0.1);
+    .from(upperRow, { x: toRem(-112), opacity: 0 }, 0)
+    .from(lowerRow, { x: toRem(112), opacity: 0 }, 0.1);
 }
 
 /**
@@ -160,19 +170,29 @@ function initReviews() {
  *  7. 13 Отзывы — два ряда выезжают с противоположных сторон
  *  8. 15 Наставники — CSS-подсветка карточки и проявление иконки при наведении
  *  9. 16 Аренда — карточки собираются в стопку через CSS sticky
+ * 10. 01 Первый экран — пролёт по коридору с карточками и видео
  */
-export function initAnimations() {
+export function initAnimations(lenis) {
   initCarousels();
 
   const media = gsap.matchMedia();
-  media.add('(prefers-reduced-motion: no-preference)', initProgramOffers);
-  media.add('(min-width: 1200px) and (prefers-reduced-motion: no-preference)', initAdultsAnimation);
-  media.add('(prefers-reduced-motion: no-preference)', initKidsPoints);
-  media.add('(min-width: 1200px) and (prefers-reduced-motion: no-preference)', initServiceAnimation);
-  media.add('(prefers-reduced-motion: no-preference)', initReviews);
+  media.add('(prefers-reduced-motion: no-preference)', () => initHeroAnimation(lenis));
+  media.add('(min-width: 900px) and (prefers-reduced-motion: no-preference)', () => {
+    const removeOfferListeners = initProgramOffers();
+    const resetAdults = initAdultsAnimation();
+    const resetService = initServiceAnimation();
+    initKidsPoints();
+    initReviews();
+    return () => {
+      removeOfferListeners();
+      resetAdults?.();
+      resetService?.();
+    };
+  });
+  media.add('(width < 900px) and (prefers-reduced-motion: no-preference)', initMobileAnimations);
 
   const teensCards = document.querySelector('[data-teens-cards]');
   if (teensCards) {
-    media.add('(any-hover: hover) and (prefers-reduced-motion: no-preference)', () => initTeensPhotos(teensCards));
+    media.add('(min-width: 900px) and (any-hover: hover) and (prefers-reduced-motion: no-preference)', () => initTeensPhotos(teensCards));
   }
 }

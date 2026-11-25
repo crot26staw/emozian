@@ -7,6 +7,7 @@
     <meta name="description" content="Танцы, вокал и игра на инструментах в Красногорске для детей, подростков и взрослых. С нуля и для опытных: группа до 10 человек или индивидуально." />
     <link rel="preload" href="/fonts/Bounded-Variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/src/css/main.css" />
+    <link rel="stylesheet" href="/src/css/mobile.css" />
   </head>
   <body>
     <!-- ============ ШАПКА ============ -->
@@ -22,28 +23,59 @@
             </span>
           </div>
         </div>
-        <nav class="header__nav" aria-label="Направления">
-          <a href="#teens" data-scroll-to>подросткам</a>
-          <a href="#kids" data-scroll-to>детям</a>
-          <a href="#adults" data-scroll-to>взрослым</a>
-        </nav>
-        <nav class="header__nav header__nav--right" aria-label="Услуги">
-          <a href="#rent" data-scroll-to>аренда залов</a>
-          <a href="#contacts" data-scroll-to>подарочный сертификат</a>
-        </nav>
+        <button class="header__toggle" type="button" popovertarget="site-navigation" aria-label="Меню" aria-controls="site-navigation">
+          <span></span><span></span>
+        </button>
+        <div class="header__menus" id="site-navigation" popover>
+          <nav class="header__nav" aria-label="Направления">
+            <a href="#teens" data-scroll-to>подросткам</a>
+            <a href="#kids" data-scroll-to>детям</a>
+            <a href="#adults" data-scroll-to>взрослым</a>
+          </nav>
+          <nav class="header__nav header__nav--right" aria-label="Услуги">
+            <a href="#rent" data-scroll-to>аренда залов</a>
+            <a href="#contacts" data-scroll-to>подарочный сертификат</a>
+          </nav>
+        </div>
       </div>
     </header>
 
     <main>
       <!-- ============ 01. ПЕРВЫЙ ЭКРАН ============ -->
-      <section class="hero" id="top">
-        <img class="hero__bg" src="/img/hero-bg.webp" alt="" width="1920" height="1080" />
-        <div class="hero__shade" aria-hidden="true"></div>
-        <img class="hero__screens" src="/img/hero-screens.webp" alt="Ученики студии на сцене: дети и подростки" width="1440" height="720" />
-        <div class="hero__content">
-          <p class="hero__eyebrow">Танцы и вокал в Красногорске:</p>
-          <h1 class="hero__title"><span class="hero__title-line1">от хобби</span><br />до большой сцены</h1>
-          <p class="hero__text">С нуля и для опытных: группа от 10 человек или индивидуально</p>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__scene">
+          <img class="hero__bg" src="/img/hero-bg.webp" alt="" width="1920" height="1080" fetchpriority="high" />
+          <div class="hero__shade" aria-hidden="true"></div>
+          <div class="hero__frame">
+            <div class="hero__still">
+              <img src="/img/hero-screens.webp" alt="Ученики студии на сцене" width="1440" height="720" />
+            </div>
+            <div class="hero__content">
+              <p class="hero__eyebrow">Танцы и вокал в Красногорске:</p>
+              <h1 class="hero__title" id="hero-title"><span class="hero__title-line1">от хобби</span><br />до большой сцены</h1>
+              <p class="hero__text">С нуля и для опытных: группа <span>от 10 человек или индивидуально</span></p>
+            </div>
+            <div class="hero__stage" role="group" aria-label="Направления и выступления студии">
+              <a class="hero__card" href="#kids" aria-label="Детям — вокал, инструменты и танцы"><img src="/img/hero-kids.webp" width="1584" height="923" alt="" draggable="false" /></a>
+              <a class="hero__card" href="#teens" aria-label="Подросткам — вокал, инструменты и танцы"><img src="/img/hero-teens.webp" width="1584" height="923" alt="" draggable="false" /></a>
+              <a class="hero__card" href="#adults" aria-label="Взрослым — вокал, инструменты и танцы"><img src="/img/hero-adults.webp" width="1584" height="923" alt="" draggable="false" /></a>
+              <div class="hero__card hero__card--video" aria-hidden="true">
+                <video src="/video/hero-stage.mp4" poster="/img/hero-stage.webp" width="800" height="464" muted loop playsinline preload="none"></video>
+              </div>
+              <div class="hero__card hero__card--video" aria-hidden="true">
+                <video src="/video/hero-vocal.mp4" poster="/img/hero-vocal.webp" width="800" height="464" muted loop playsinline preload="none"></video>
+              </div>
+              <div class="hero__card hero__card--video" aria-hidden="true">
+                <video src="/video/hero-guitar.mp4" poster="/img/hero-guitar.webp" width="800" height="464" muted loop playsinline preload="none"></video>
+              </div>
+            </div>
+            <button class="hero__next" type="button" aria-label="Следующий экран">
+              <svg viewBox="0 0 38 38" aria-hidden="true">
+                <circle cx="19" cy="19" r="17.5" />
+                <circle class="hero__progress" cx="19" cy="19" r="17.5" pathLength="1" />
+              </svg>
+            </button>
+          </div>
         </div>
       </section>
 
@@ -54,13 +86,13 @@
           <header class="section-head">
             <p class="section-head__pre">Не кружок,</p>
             <h2 class="section-head__title teens__title">а своя тусовка</h2>
-            <p class="section-head__text">Подростки здесь не просто ходят на занятия, а растут в компании своих</p>
+            <p class="section-head__text">Подростки здесь не&nbsp;просто ходят на&nbsp;занятия, а&nbsp;растут в&nbsp;компании своих</p>
           </header>
 
           <div class="teens__cards" data-teens-cards>
             <a href="#teens-dance" class="dir-card" data-scroll-to>
               <span class="dir-card__num">/ 01</span>
-              <span class="dir-card__title">Танцы<br />в&nbsp;разных стилях</span>
+              <span class="dir-card__title">Танцы <br />в&nbsp;разных стилях</span>
               <span class="dir-card__photo-window" aria-hidden="true"><span class="dir-card__photo"><img src="/img/hover-dance.webp" alt="" width="600" height="400" /></span></span>
             </a>
             <a href="#teens-vocal" class="dir-card dir-card--default is-active" data-scroll-to>
@@ -70,7 +102,7 @@
             </a>
             <a href="#teens-instruments" class="dir-card" data-scroll-to>
               <span class="dir-card__num">/ 03</span>
-              <span class="dir-card__title">Игра<br />на&nbsp;инструментах</span>
+              <span class="dir-card__title">Игра <br />на&nbsp;инструментах</span>
               <span class="dir-card__photo-window" aria-hidden="true"><span class="dir-card__photo"><img src="/img/hover-instruments.webp" alt="" width="600" height="374" /></span></span>
             </a>
           </div>
@@ -86,17 +118,19 @@
 
           <div class="carousel" data-carousel>
             <div class="carousel__stage">
-              <figure class="carousel__slide" data-pos="-2" data-caption="Подростки здесь растут&#10;в компании своих" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="-1" data-caption="Выезжаем на танцевальные батлы&#10;и проверяем себя в деле" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="0" data-caption="В конце первого занятия вы уже танцуете&#10;современные связки"><img src="/img/slide-dance.webp" alt="Подростки танцуют хип-хоп на сцене" /></figure>
-              <figure class="carousel__slide" data-pos="1" data-caption="Хип-хоп и современная хореография&#10;в подростковых группах" aria-hidden="true"><img src="/img/slide-b.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="2" data-caption="Выезжаем на танцевальные батлы&#10;и проверяем себя в деле" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+              <div class="carousel__orbit">
+                <figure class="carousel__slide" data-pos="-2" data-caption="Подростки здесь растут&#10;в компании своих" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="-1" data-caption="Выезжаем на танцевальные батлы&#10;и проверяем себя в деле" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="0" data-caption="В конце первого занятия вы уже танцуете&#10;современные связки"><img src="/img/slide-dance.webp" alt="Подростки танцуют хип-хоп на сцене" /></figure>
+                <figure class="carousel__slide" data-pos="1" data-caption="Хип-хоп и современная хореография&#10;в подростковых группах" aria-hidden="true"><img src="/img/slide-b.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="2" data-caption="Выезжаем на танцевальные батлы&#10;и проверяем себя в деле" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+              </div>
             </div>
             <div class="carousel__nav">
               <button class="carousel__btn" type="button" data-carousel-prev aria-label="Предыдущий слайд"><img src="/img/icons/arrow-prev.svg" alt="" /></button>
               <button class="carousel__btn" type="button" data-carousel-next aria-label="Следующий слайд"><img src="/img/icons/arrow-next.svg" alt="" /></button>
             </div>
-            <p class="carousel__caption" data-carousel-caption aria-live="polite" aria-atomic="true">В конце первого занятия вы уже танцуете<br />современные связки</p>
+            <p class="carousel__caption" data-carousel-caption aria-live="polite" aria-atomic="true">В конце первого занятия вы уже танцуете <br />современные связки</p>
           </div>
 
           <div class="offers offers--2">
@@ -142,17 +176,19 @@
 
           <div class="carousel" data-carousel>
             <div class="carousel__stage">
-              <figure class="carousel__slide" data-pos="-2" data-caption="Занимайтесь для души&#10;или готовьтесь к выступлениям" aria-hidden="true"><img src="/img/slide-c.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="-1" data-caption="Наставника подберём&#10;под ваш голос и цель" aria-hidden="true"><img src="/img/slide-d.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="0" data-caption="Споёте любимую песню в&nbsp;микрофон&#10;уже на&nbsp;первом занятии"><img src="/img/slide-vocal.webp" alt="Подростки поют на сцене" /></figure>
-              <figure class="carousel__slide carousel__slide--tint" data-pos="1" data-caption="Пойте вместе с ровесниками&#10;в группе до&nbsp;10 человек" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
-              <figure class="carousel__slide" data-pos="2" data-caption="Наставника подберём&#10;под ваш голос и цель" aria-hidden="true"><img src="/img/slide-d.webp" alt="" /></figure>
+              <div class="carousel__orbit">
+                <figure class="carousel__slide" data-pos="-2" data-caption="Занимайтесь для души&#10;или готовьтесь к выступлениям" aria-hidden="true"><img src="/img/slide-c.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="-1" data-caption="Наставника подберём&#10;под ваш голос и цель" aria-hidden="true"><img src="/img/slide-d.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="0" data-caption="Споёте любимую песню в&nbsp;микрофон&#10;уже на&nbsp;первом занятии"><img src="/img/slide-vocal.webp" alt="Подростки поют на сцене" /></figure>
+                <figure class="carousel__slide carousel__slide--tint" data-pos="1" data-caption="Пойте вместе с ровесниками&#10;в группе до&nbsp;10 человек" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
+                <figure class="carousel__slide" data-pos="2" data-caption="Наставника подберём&#10;под ваш голос и цель" aria-hidden="true"><img src="/img/slide-d.webp" alt="" /></figure>
+              </div>
             </div>
             <div class="carousel__nav">
               <button class="carousel__btn" type="button" data-carousel-prev aria-label="Предыдущий слайд"><img src="/img/icons/arrow-prev.svg" alt="" /></button>
               <button class="carousel__btn" type="button" data-carousel-next aria-label="Следующий слайд"><img src="/img/icons/arrow-next.svg" alt="" /></button>
             </div>
-            <p class="carousel__caption carousel__caption--narrow" data-carousel-caption aria-live="polite" aria-atomic="true">Споёте любимую песню в&nbsp;микрофон<br />уже на&nbsp;первом занятии</p>
+            <p class="carousel__caption carousel__caption--narrow" data-carousel-caption aria-live="polite" aria-atomic="true">Споёте любимую песню в&nbsp;микрофон <br />уже на&nbsp;первом занятии</p>
           </div>
 
           <div class="offers offers--2">
@@ -189,17 +225,19 @@
 
           <div class="carousel" data-carousel>
             <div class="carousel__stage">
-              <figure class="carousel__slide carousel__slide--tint" data-pos="-2" data-caption="Гитара, фортепиано и саксофон&#10;на индивидуальных занятиях" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
-              <figure class="carousel__slide carousel__slide--tint" data-pos="-1" data-caption="Начните с нуля&#10;или продолжите занятия с наставником" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
-              <figure class="carousel__slide carousel__slide--warm" data-pos="0" data-caption="Любимая мелодия зазвучит уже&#10;на&nbsp;первом занятии"><img src="/img/slide-guitar.webp" alt="Подросток играет на гитаре" /></figure>
-              <figure class="carousel__slide carousel__slide--tint" data-pos="1" data-caption="Гитара, фортепиано и саксофон&#10;на индивидуальных занятиях" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
-              <figure class="carousel__slide carousel__slide--tint" data-pos="2" data-caption="Начните с нуля&#10;или продолжите занятия с наставником" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+              <div class="carousel__orbit">
+                <figure class="carousel__slide carousel__slide--tint" data-pos="-2" data-caption="Гитара, фортепиано и саксофон&#10;на индивидуальных занятиях" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
+                <figure class="carousel__slide carousel__slide--tint" data-pos="-1" data-caption="Начните с нуля&#10;или продолжите занятия с наставником" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+                <figure class="carousel__slide carousel__slide--warm" data-pos="0" data-caption="Любимая мелодия зазвучит уже&#10;на&nbsp;первом занятии"><img src="/img/slide-guitar.webp" alt="Подросток играет на гитаре" /></figure>
+                <figure class="carousel__slide carousel__slide--tint" data-pos="1" data-caption="Гитара, фортепиано и саксофон&#10;на индивидуальных занятиях" aria-hidden="true"><img src="/img/teen-vocal.webp" alt="" /></figure>
+                <figure class="carousel__slide carousel__slide--tint" data-pos="2" data-caption="Начните с нуля&#10;или продолжите занятия с наставником" aria-hidden="true"><img src="/img/slide-a.webp" alt="" /></figure>
+              </div>
             </div>
             <div class="carousel__nav">
               <button class="carousel__btn" type="button" data-carousel-prev aria-label="Предыдущий слайд"><img src="/img/icons/arrow-prev.svg" alt="" /></button>
               <button class="carousel__btn" type="button" data-carousel-next aria-label="Следующий слайд"><img src="/img/icons/arrow-next.svg" alt="" /></button>
             </div>
-            <p class="carousel__caption carousel__caption--narrow" data-carousel-caption aria-live="polite" aria-atomic="true">Любимая мелодия зазвучит уже<br />на&nbsp;первом занятии</p>
+            <p class="carousel__caption carousel__caption--narrow" data-carousel-caption aria-live="polite" aria-atomic="true">Любимая мелодия зазвучит уже <br />на&nbsp;первом занятии</p>
           </div>
 
           <div class="offers offers--3">
@@ -387,36 +425,36 @@
       <!-- ============ 09. СЕРВИС ============ -->
       <section class="service" id="service">
         <div class="service__scene">
-          <h2 class="service__title">Сервис,<br />который замечаешь<br />с&nbsp;первого визита</h2>
+          <h2 class="service__title">Сервис, <br />который замечаешь <br />с&nbsp;первого визита</h2>
           <div class="service__blue" aria-hidden="true"></div>
         </div>
 
         <div class="service__inner">
-          <article class="service-card" style="--x: 116px; --y: 130px">
-            <h3 class="service-card__title">Индивидуальный подход</h3>
-            <p class="service-card__text" style="width: 447px">Каждый возраст занимается отдельно. Для души или для сцены: подберём наставника и&nbsp;нагрузку под вашу цель</p>
-          </article>
-          <article class="service-card" style="--x: 24px; --y: 308px">
+          <article class="service-card" style="--x: 1.5rem; --y: 19.25rem">
             <div class="service-card__photo"><img src="/img/adult.webp" alt="" /></div>
             <h3 class="service-card__title">Мастер-классы звёзд</h3>
             <p class="service-card__text">К нам приезжают те, кого знает вся страна: Анна Бутурлина, голос Эльзы из&nbsp;«Холодного сердца», Владимир Смоук и&nbsp;другие</p>
           </article>
-          <article class="service-card" style="--x: 968px; --y: 96px">
-            <div class="service-card__photo"><img src="/img/adult.webp" alt="" /></div>
-            <h3 class="service-card__title">Есть где отдохнуть</h3>
-            <p class="service-card__text" style="width: 372px">Диваны, бесплатный кофе, раздевалки и&nbsp;место для рисования, пока дети занимаются</p>
+          <article class="service-card" style="--x: 7.25rem; --y: 8.125rem">
+            <h3 class="service-card__title">Индивидуальный подход</h3>
+            <p class="service-card__text" style="--text-width: 27.9375rem">Каждый возраст занимается отдельно. Для души или для сцены: подберём наставника и&nbsp;нагрузку под вашу цель</p>
           </article>
-          <article class="service-card" style="--x: 694px; --y: 519px">
-            <h3 class="service-card__title">Оплата без сюрпризов</h3>
-            <p class="service-card__text">Платите помесячно, годовых абонементов нет. Заморозка без справок. О&nbsp;любых сборах скажем заранее, до&nbsp;оплаты</p>
-          </article>
-          <article class="service-card" style="--x: 143px; --y: 711px">
+          <article class="service-card" style="--x: 8.9375rem; --y: 44.4375rem">
             <h3 class="service-card__title">Спокойно за ребёнка</h3>
             <p class="service-card__text">Школа закрыта, ребёнок сам не выйдет. Администратор проводит его в&nbsp;класс и&nbsp;дождётся вас, если опоздаете</p>
           </article>
-          <article class="service-card" style="--x: 1048px; --y: 702px">
+          <article class="service-card" style="--x: 60.5rem; --y: 6rem">
+            <div class="service-card__photo"><img src="/img/adult.webp" alt="" /></div>
+            <h3 class="service-card__title">Есть где отдохнуть</h3>
+            <p class="service-card__text" style="--text-width: 23.25rem">Диваны, бесплатный кофе, раздевалки и&nbsp;место для рисования, пока дети занимаются</p>
+          </article>
+          <article class="service-card" style="--x: 43.375rem; --y: 32.4375rem">
+            <h3 class="service-card__title">Оплата без сюрпризов</h3>
+            <p class="service-card__text">Платите помесячно, годовых абонементов нет. Заморозка без справок. О&nbsp;любых сборах скажем заранее, до&nbsp;оплаты</p>
+          </article>
+          <article class="service-card" style="--x: 65.5rem; --y: 43.875rem">
             <h3 class="service-card__title">Онлайн-трансляция</h3>
-            <p class="service-card__text" style="width: 324px">Смотрите, как проходит занятие, на&nbsp;экране в&nbsp;зоне ожидания</p>
+            <p class="service-card__text" style="--text-width: 20.25rem">Смотрите, как проходит занятие, на&nbsp;экране в&nbsp;зоне ожидания</p>
           </article>
         </div>
       </section>
@@ -425,7 +463,7 @@
       <section class="studio-video" id="studio">
         <div class="container">
           <div class="studio-video__frame">
-            <video autoplay muted loop playsinline width="1920" height="1080" aria-label="Студия «Эмюзиан» и занятия в залах">
+            <video controls muted loop playsinline preload="none" poster="/img/studio-poster.webp" width="1920" height="1080" aria-label="Студия «Эмюзиан» и занятия в залах">
               <source src="/video/emozian-video.mp4" type="video/mp4" />
             </video>
           </div>
@@ -456,14 +494,14 @@
 
           <div class="reviews__list">
             <div class="reviews__row">
-              <blockquote class="review" style="--x: 0px"><img src="/img/avatar-1.webp" alt="" /><p>Я пришла для души,<br />и мне здесь идеально</p></blockquote>
-              <blockquote class="review" style="--x: 321px"><img src="/img/avatar-2.webp" alt="" /><p>Мы победили<br />на международном конкурсе</p></blockquote>
-              <blockquote class="review" style="--x: 709px"><img src="/img/avatar-3.webp" alt="" /><p>Пришёл в сентябре, а в декабре уже<br />вышел на большую сцену</p></blockquote>
+              <blockquote class="review" style="--x: 0rem"><img src="/img/avatar-1.webp" alt="" /><p>Я пришла для души, <br />и мне здесь идеально</p></blockquote>
+              <blockquote class="review" style="--x: 20.0625rem"><img src="/img/avatar-2.webp" alt="" /><p>Мы победили <br />на международном конкурсе</p></blockquote>
+              <blockquote class="review" style="--x: 44.3125rem"><img src="/img/avatar-3.webp" alt="" /><p>Пришёл в сентябре, а в декабре уже <br />вышел на большую сцену</p></blockquote>
             </div>
             <div class="reviews__row">
-              <blockquote class="review" style="--x: 183px"><img src="/img/avatar-4.webp" alt="" /><p>У меня расширился круг общения:<br />появились друзья по танцам</p></blockquote>
-              <blockquote class="review" style="--x: 616px"><img src="/img/avatar-5.webp" alt="" /><p>Я стала увереннее и не боюсь<br />выходить на сцену</p></blockquote>
-              <blockquote class="review" style="--x: 1007px"><img src="/img/avatar-6.webp" alt="" /><p>Я поступила в [вуз] на бюджет,<br />к поступлению готовилась здесь</p></blockquote>
+              <blockquote class="review" style="--x: 11.4375rem"><img src="/img/avatar-4.webp" alt="" /><p>У меня расширился круг общения: <br />появились друзья по танцам</p></blockquote>
+              <blockquote class="review" style="--x: 38.5rem"><img src="/img/avatar-5.webp" alt="" /><p>Я стала увереннее и не боюсь <br />выходить на сцену</p></blockquote>
+              <blockquote class="review" style="--x: 62.9375rem"><img src="/img/avatar-6.webp" alt="" /><p>Я поступила в [вуз] на бюджет, <br />к поступлению готовилась здесь</p></blockquote>
             </div>
           </div>
         </div>
@@ -473,23 +511,28 @@
       <section class="signup" id="signup">
         <div class="container">
           <div class="signup__panel">
+            <h2 class="form__title" id="signup-title">Запишитесь на&nbsp;пробное: <br /><span>подберём наставника под ваши цели</span></h2>
             <div class="signup__person">
-              <div class="signup__photo"><img src="/img/anna.webp" alt="Анна Аветисян с ученицами" width="960" height="473" /></div>
+              <div class="signup__photo">
+                <picture>
+                  <source media="(width &lt; 900px)" srcset="/img/anna-mobile.webp" />
+                  <img src="/img/anna.webp" alt="Анна Аветисян с ученицами" width="960" height="473" />
+                </picture>
+              </div>
               <div class="signup__person-row">
                 <div>
                   <p class="signup__name">Анна Аветисян</p>
                   <p class="signup__role">Руководительница студии</p>
                 </div>
                 <div class="signup__contact">
-                  <p class="signup__reply">Отвечу<br />за 15 минут</p>
+                  <p class="signup__reply">Отвечу <br />за 15 минут</p>
                   <a class="social" href="#" aria-label="MAX"><img src="/img/icons/social-max.svg" alt="" /></a>
                   <a class="social" href="#" aria-label="Telegram"><img src="/img/icons/social-telegram.svg" alt="" /></a>
                 </div>
               </div>
             </div>
 
-            <form class="form signup__form" action="#" method="post">
-              <h2 class="form__title">Запишитесь на пробное:<br /><span>подберём наставника под ваши цели</span></h2>
+            <form class="form signup__form" aria-labelledby="signup-title" action="#" method="post">
               <div class="form__row">
                 <label class="field field--grow">
                   <span class="field__label">Направление</span>
@@ -529,23 +572,32 @@
       <!-- ============ 15. НАСТАВНИКИ ============ -->
       <section class="mentors" id="mentors">
         <div class="container">
-          <h2 class="mentors__title">Наставники с&nbsp;высшим образованием<br />и&nbsp;опытом от&nbsp;5&nbsp;до&nbsp;15+&nbsp;лет</h2>
+          <h2 class="mentors__title">Наставники с&nbsp;высшим образованием <br />и&nbsp;опытом от&nbsp;5 до&nbsp;15+&nbsp;лет</h2>
           <div class="mentors__cards">
             <article class="mentor-card">
               <span class="mentor-card__num">/ 01</span>
-              <img class="mentor-card__icon" src="/img/icons/icon-mentor-1.svg" alt="" />
-              <p class="mentor-card__text">Наставников отбирает лично Анна:<br />смотрит образование, беседует<br />и проверяет, как человек проводит<br />пробный урок.</p>
+              <picture>
+                <source media="(width &lt; 900px)" srcset="/img/icons/mentor-clef-mobile.svg" />
+                <img class="mentor-card__icon mentor-card__icon--tall" src="/img/icons/icon-mentor-1.svg" alt="" />
+              </picture>
+              <p class="mentor-card__text">Наставников отбирает лично Анна: <br />смотрит образование, беседует <br />и проверяет, как человек проводит <br />пробный урок.</p>
             </article>
             <article class="mentor-card mentor-card--default">
               <span class="mentor-card__num">/ 02</span>
-              <img class="mentor-card__icon mentor-card__icon--rest" src="/img/icons/icon-mic.svg" alt="" />
+              <picture>
+                <source media="(width &lt; 900px)" srcset="/img/icons/mentor-mic-mobile.svg" />
+                <img class="mentor-card__icon mentor-card__icon--rest" src="/img/icons/icon-mic.svg" alt="" />
+              </picture>
               <img class="mentor-card__icon" src="/img/icons/icon-mentor-2.svg" alt="" />
-              <p class="mentor-card__text">В каждом направлении: прочная<br />основа и то, что нравится молодёжи.<br />Сначала дыхание, слух, ритм<br />и пластика, потом сцена.</p>
+              <p class="mentor-card__text">В каждом направлении: прочная <br />основа и то, что нравится молодёжи. <br />Сначала дыхание, слух, ритм <br />и пластика, потом сцена.</p>
             </article>
             <article class="mentor-card">
               <span class="mentor-card__num">/ 03</span>
-              <img class="mentor-card__icon" src="/img/icons/icon-mentor-3.svg" alt="" />
-              <p class="mentor-card__text" style="width: 370px">Анна следит за прогрессом каждого и&nbsp;подбирает песню и&nbsp;конкурс, когда ученик готов. Выступления каждую неделю, фестиваль дважды в&nbsp;год, жюри из&nbsp;телеэкспертов.</p>
+              <picture>
+                <source media="(width &lt; 900px)" srcset="/img/icons/mentor-record-mobile.svg" />
+                <img class="mentor-card__icon mentor-card__icon--square" src="/img/icons/icon-mentor-3.svg" alt="" />
+              </picture>
+              <p class="mentor-card__text" style="--text-width: 23.125rem">Анна следит за прогрессом каждого и&nbsp;подбирает песню и&nbsp;конкурс, когда ученик готов. Выступления каждую неделю, фестиваль дважды в&nbsp;год, жюри из&nbsp;телеэкспертов.</p>
             </article>
           </div>
         </div>
@@ -559,7 +611,7 @@
             <p class="rent__note">Выберите зал и&nbsp;нажмите «Забронировать», ответим в&nbsp;течение 15&nbsp;минут</p>
           </div>
           <div class="rent__stack">
-            <article class="hall-card" style="--x: 614px; --y: 57px">
+            <article class="hall-card" style="--x: 38.375rem; --y: 3.5625rem">
               <div class="hall-card__photo"><img src="/img/hall-small.webp" alt="Малый вокальный зал" /></div>
               <div class="hall-card__row">
                 <h3 class="hall-card__title">Малый вокальный</h3>
@@ -567,7 +619,7 @@
               </div>
               <a href="#contacts" class="btn btn--white btn--block" data-scroll-to>Забронировать</a>
             </article>
-            <article class="hall-card" style="--x: 732px; --y: 121px">
+            <article class="hall-card" style="--x: 45.75rem; --y: 7.5625rem">
               <div class="hall-card__photo"><img src="/img/hall-big.webp" alt="Большой вокальный зал" /></div>
               <div class="hall-card__row">
                 <h3 class="hall-card__title">Большой вокальный</h3>
@@ -575,7 +627,7 @@
               </div>
               <a href="#contacts" class="btn btn--white btn--block" data-scroll-to>Забронировать</a>
             </article>
-            <article class="hall-card" style="--x: 845px; --y: 185px">
+            <article class="hall-card" style="--x: 52.8125rem; --y: 11.5625rem">
               <div class="hall-card__photo"><img src="/img/hall-dance.webp" alt="Танцевальный зал" /></div>
               <div class="hall-card__row">
                 <h3 class="hall-card__title">Танцевальный зал</h3>
@@ -592,11 +644,16 @@
         <div class="container">
           <div class="contacts__top">
             <div class="contacts__map-col">
-              <a class="contacts__map" href="#" target="_blank" rel="noopener"><img src="/img/map.webp" alt="Карта: Красногорск, Красногорский бульвар, 25" width="1348" height="614" /></a>
+              <a class="contacts__map" href="#" target="_blank" rel="noopener">
+                <picture>
+                  <source media="(width &lt; 900px)" srcset="/img/map-mobile.webp" />
+                  <img src="/img/map.webp" alt="Карта: Красногорск, Красногорский бульвар, 25" width="1348" height="614" />
+                </picture>
+              </a>
               <p class="contacts__metro">Метро Мякинино: 5 минут на маршрутке или 15 пешком. Бесплатная парковка</p>
             </div>
             <div class="contacts__info">
-              <h2 class="contacts__title">Запишитесь на занятия<br />или получите консультацию</h2>
+              <h2 class="contacts__title">Запишитесь на&nbsp;занятия <br />или получите консультацию</h2>
               <dl class="contacts__list">
                 <div><dt>Адрес</dt><dd>Красногорск, Красногорский бульвар, 25</dd></div>
                 <div><dt>Режим работы</dt><dd>Без выходных, с 10:00 до 21:00</dd></div>
@@ -612,32 +669,32 @@
             </div>
           </div>
 
-          <form class="cta" action="#" method="post">
+          <form class="cta" aria-labelledby="consultation-title" action="#" method="post">
             <div class="cta__head">
-              <h2 class="cta__title">Не знаете,<br />с чего начать?</h2>
+              <h2 class="cta__title" id="consultation-title">Не знаете, <br />с чего начать?</h2>
               <div class="cta__aside">
                 <span class="cta__badge">ответим за 15 минут</span>
-                <p class="cta__text">Поможем выбрать направление<br />и наставника под вашу цель</p>
+                <p class="cta__text">Поможем выбрать направление <br />и наставника под вашу цель</p>
               </div>
             </div>
             <div class="cta__form">
-              <div class="cta__row">
-                <label class="field field--sm">
-                  <span class="field__label">Телефон</span>
-                  <input class="field__control" type="tel" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" pattern="\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}" title="Формат номера: +7 (___) ___-__-__" required />
-                </label>
-                <button class="btn btn--white btn--cta" type="submit">Записаться на пробное</button>
-              </div>
+              <label class="field field--sm">
+                <span class="field__label">Телефон</span>
+                <input class="field__control" type="tel" name="phone" autocomplete="tel" placeholder="+7 (___) ___-__-__" pattern="\+7 \([0-9]{3}\) [0-9]{3}-[0-9]{2}-[0-9]{2}" title="Формат номера: +7 (___) ___-__-__" required />
+              </label>
               <label class="checkbox">
                 <input type="checkbox" name="agree" required />
                 <span>Ознакомлен(а) с политикой конфиденциальности и даю согласие на обработку персональных данных</span>
               </label>
+              <button class="btn btn--white btn--cta" type="submit">Записаться на пробное</button>
             </div>
           </form>
         </div>
 
         <footer class="footer">
           <div class="container footer__inner">
+            <a href="#rent" class="footer__nav-link" data-scroll-to>Аренда залов</a>
+            <a href="#contacts" class="footer__nav-link" data-scroll-to>Подарочный сертификат</a>
             <a href="#" class="footer__link">Политика конфиденциальности</a>
             <span class="footer__link">Сайт разработан DL BRAND</span>
           </div>
